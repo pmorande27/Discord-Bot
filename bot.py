@@ -38,5 +38,4 @@ async def latex(ctx,*,latex):
     await ctx.send(file=discord.File('a.png'))
     
 
-token = ""
 client.run(token)
