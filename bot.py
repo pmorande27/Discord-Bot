@@ -3,7 +3,14 @@ from discord.ext import commands
 import sympy
 from sympy import symbols, Symbol,preview
 import math
+import wolframalpha
+app_id = 'wolfram_id'
+wolfram = wolframalpha.Client(app_id)
 client = commands.Bot(command_prefix = "!")
+def query_to_alpha(inputs):
+    res = wolfram.query(inputs)
+    return next(res.results).text
+
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
@@ -36,6 +43,9 @@ async def unban(ctx,*, member):
 async def latex(ctx,*,latex):
     preview(latex, viewer='file', filename='a.png', euler=False)
     await ctx.send(file=discord.File('a.png'))
+@client.command()
+async def alpha(ctx,*,inputs): 
+    await ctx.send(query_to_alpha(inputs))
     
 
-client.run(token)
+client.run('token')
